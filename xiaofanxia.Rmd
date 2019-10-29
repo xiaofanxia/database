@@ -1,0 +1,20 @@
+---
+title: "database"
+author: "xiaofan xia"
+date: "10/29/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+## First NF
+Elimanate duplicative columns from the same table and create separate tables for each group of related data and identify each row with a unique column or set of columns.
+
+```{r warning=FALSE}
+donor <- read.csv("Top MA Donors 2016-2020(1).csv")
+donor_new <- donor[1:19]
+```
+
+#Second NF
