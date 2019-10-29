@@ -372,10 +372,79 @@ summary {
 
 <div id="first-nf" class="section level2">
 <h2>First NF</h2>
-<p>Elimanate duplicative columns from the same table and create separate tables for each group of related data and identify each row with a unique column or set of columns.</p>
+<p>Elimanate duplicative columns from the same table.</p>
 <pre class="r"><code>donor &lt;- read.csv(&quot;Top MA Donors 2016-2020(1).csv&quot;)
-donor_new &lt;- donor[1:19]</code></pre>
-<p>#Second NF</p>
+donor_new &lt;- donor[1:19]
+donor_new &lt;- unique(donor_new)
+head(donor_new)</code></pre>
+<pre><code>##   cycle   contribid fam           contrib    City State  Zip
+## 1  2016 a0000375486   1 SLIFKA, RICHARD B WALTHAM    MA 2454
+## 2  2016 a0000375486   A   SLIFKA, ROSALYN WALTHAM    MA 2453
+## 3  2016 a0000375486   1   SLIFKA, RICHARD  BOSTON    MA 2199
+## 4  2016 a0000375486   1   SLIFKA, RICHARD WALTHAM    MA 2454
+## 5  2016 a0000375486   1   SLIFKA, RICHARD WALTHAM    MA 2454
+## 6  2016 a0000375486   1   SLIFKA, RICHARD WALTHAM    MA 2454
+##                Fecoccemp            orgname ultorg       date  amount
+## 1     GLOBAL PARTNERS LP Global Partners LP        2015/10/26 $25,000
+## 2              HOMEMAKER Global Partners LP         2016/9/19  $2,700
+## 3 GLOBAL PETROLEUM CORP. Global Partners LP         2015/6/30  $1,000
+## 4  GLOBAL PETROLEUM CORP Global Partners LP          2015/8/3  $3,500
+## 5  GLOBAL PETROLEUM CORP Global Partners LP         2015/8/20   -$800
+## 6  GLOBAL PETROLEUM CORP Global Partners LP         2015/8/20    $800
+##     recipid                           recipient party recipcode type
+## 1 C00042366 Democratic Senatorial Campaign Cmte     D        DP   31
+## 2 N00037161             Masto, Catherine Cortez     D        DW   15
+## 3 N00036915                    Harris, Kamala D     D        DW   15
+## 4 N00000036                      Feingold, Russ     D        DL   15
+## 5 N00000036                      Feingold, Russ     D        DL   15
+## 6 N00000036                      Feingold, Russ     D        DL   15
+##            fectransid    cmteid
+## 1 1012520160018270796 C00042366
+## 2 1020120170033219199 C00575548
+## 3 1031520160018491198 C00571919
+## 4 1032020170033880030 C00578013
+## 5 1032020170033880031 C00578013
+## 6 1032020170033880032 C00578013</code></pre>
+<p>The primary keys I chose is fectransid (A unique record identifier within a given cycle.)</p>
+<pre class="r"><code>contrib_quarry &lt;- donor_new[c(2:12,17:18)]
+head(contrib_quarry)</code></pre>
+<pre><code>##     contribid fam           contrib    City State  Zip
+## 1 a0000375486   1 SLIFKA, RICHARD B WALTHAM    MA 2454
+## 2 a0000375486   A   SLIFKA, ROSALYN WALTHAM    MA 2453
+## 3 a0000375486   1   SLIFKA, RICHARD  BOSTON    MA 2199
+## 4 a0000375486   1   SLIFKA, RICHARD WALTHAM    MA 2454
+## 5 a0000375486   1   SLIFKA, RICHARD WALTHAM    MA 2454
+## 6 a0000375486   1   SLIFKA, RICHARD WALTHAM    MA 2454
+##                Fecoccemp            orgname ultorg       date  amount type
+## 1     GLOBAL PARTNERS LP Global Partners LP        2015/10/26 $25,000   31
+## 2              HOMEMAKER Global Partners LP         2016/9/19  $2,700   15
+## 3 GLOBAL PETROLEUM CORP. Global Partners LP         2015/6/30  $1,000   15
+## 4  GLOBAL PETROLEUM CORP Global Partners LP          2015/8/3  $3,500   15
+## 5  GLOBAL PETROLEUM CORP Global Partners LP         2015/8/20   -$800   15
+## 6  GLOBAL PETROLEUM CORP Global Partners LP         2015/8/20    $800   15
+##            fectransid
+## 1 1012520160018270796
+## 2 1020120170033219199
+## 3 1031520160018491198
+## 4 1032020170033880030
+## 5 1032020170033880031
+## 6 1032020170033880032</code></pre>
+<pre class="r"><code>recip_quarry &lt;- donor_new[c(12:16,18:19)]
+head(recip_quarry)</code></pre>
+<pre><code>##    amount   recipid                           recipient party recipcode
+## 1 $25,000 C00042366 Democratic Senatorial Campaign Cmte     D        DP
+## 2  $2,700 N00037161             Masto, Catherine Cortez     D        DW
+## 3  $1,000 N00036915                    Harris, Kamala D     D        DW
+## 4  $3,500 N00000036                      Feingold, Russ     D        DL
+## 5   -$800 N00000036                      Feingold, Russ     D        DL
+## 6    $800 N00000036                      Feingold, Russ     D        DL
+##            fectransid    cmteid
+## 1 1012520160018270796 C00042366
+## 2 1020120170033219199 C00575548
+## 3 1031520160018491198 C00571919
+## 4 1032020170033880030 C00578013
+## 5 1032020170033880031 C00578013
+## 6 1032020170033880032 C00578013</code></pre>
 </div>
 
 

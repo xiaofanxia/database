@@ -10,11 +10,20 @@ library(tidyverse)
 ```
 
 ## First NF
-Elimanate duplicative columns from the same table and create separate tables for each group of related data and identify each row with a unique column or set of columns.
+Elimanate duplicative columns from the same table. 
 
 ```{r warning=FALSE}
 donor <- read.csv("Top MA Donors 2016-2020(1).csv")
 donor_new <- donor[1:19]
+donor_new <- unique(donor_new)
+head(donor_new)
 ```
 
-#Second NF
+The primary keys I chose is fectransid (A unique record identifier within a given cycle.)
+```{r warning=FALSE}
+contrib_quarry <- donor_new[c(2:12,17:18)]
+head(contrib_quarry)
+recip_quarry <- donor_new[c(12:16,18:19)]
+head(recip_quarry)
+```
+ 
