@@ -7,6 +7,8 @@ output: html_document
 
 ```{r setup, include=FALSE}
 library(tidyverse)
+library(RSQLite)
+library(DBI)
 ```
 
 ## First NF
@@ -16,14 +18,28 @@ Elimanate duplicative columns from the same table.
 donor <- read.csv("Top MA Donors 2016-2020(1).csv")
 donor_new <- donor[1:19]
 donor_new <- unique(donor_new)
-head(donor_new)
 ```
 
 The primary keys I chose is fectransid (A unique record identifier within a given cycle.)
 ```{r warning=FALSE}
-contrib_quarry <- donor_new[c(2:12,17:18)]
-head(contrib_quarry)
-recip_quarry <- donor_new[c(12:16,18:19)]
-head(recip_quarry)
+contrib <- donor_new[c(2:12,17:18)]
+recip <- donor_new[c(12:16,18:19)]
+demographic_contrib <- 
+  donor_new %>%
+  select(contribid,City,State,Zip)
+political_contrib <- 
+  donor_new %>%
+  select(contribid,cycle,fam,Fecoccemp,orgname,ultorg,party)
+contributions <-  
+  donor_new %>% 
+  select(contribid,date,amount,recipid)
 ```
- 
+
+```{r}
+#ma_donor<- dbConnect(SQLite(),"XiaofanXia.sqlite")
+#dbWriteTable(ma_donor,"contributor",contrib)
+#dbWriteTable(ma_donor,"recipients",recip)
+#dbWriteTable(ma_donor,"demographic_contributors",demographic_contrib)
+#dbWriteTable(ma_donor,"political_ontributors",political_contrib)
+#dbWriteTable(ma_donor,"contributions",contributions)
+```
